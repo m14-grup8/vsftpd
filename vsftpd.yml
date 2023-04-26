@@ -1,0 +1,20 @@
+- name: Install and configure vsftpd
+  hosts: srvweb.peludosyco.local
+  become: true
+  vars_files:
+    - ./secret.yml
+  roles:
+    - weareinteractive.vsftpd
+
+  vars:
+    vsftpd_users:
+      - username: peludosyco-ftp
+        name: FTP User
+        password: "{{ ftp_password }}"
+    vsftpd_config:
+      local_enable: YES
+      write_enable: YES
+      chroot_local_user: YES
+      xferlog_enable: YES
+      log_ftp_protocol: YES
+      allow_writeable_chroot: YES

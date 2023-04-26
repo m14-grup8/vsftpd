@@ -1,6 +1,8 @@
 - name: Install and configure vsftpd
   hosts: srvweb.peludosyco.local
   become: true
+  vars_files:
+    - ./secret.yml
   roles:
     - weareinteractive.vsftpd
 
@@ -8,7 +10,7 @@
     vsftpd_users:
       - username: peludosyco-ftp
         name: FTP User
-        password: "{{ 'umekosystems' | password_hash('sha256', 'mysecretsalt') }}"
+        password: "{{ ftp_password | password_hash('sha256', 'mysecretsalt') }}"
     vsftpd_config:
       local_enable: YES
       write_enable: YES
